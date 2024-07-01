@@ -126,19 +126,6 @@
     <module>org.eclipse.cbi.tycho.example.updatesite</module>
   </modules>
 
-  <distributionManagement>
-    <repository>
-      <id>repo.eclipse.org</id>
-      <name>Eclipse CBI Nexus Repository - Releases</name>
-      <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>repo.eclipse.org</id>
-      <name>Ecilpse CBI Nexus Repository - Snapshots</name>
-      <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <build>
     <plugins>
       <plugin>
@@ -166,25 +153,50 @@
 
   <profiles>
     <profile>
-      <id>release</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.cbi.maven.plugins</groupId>
-            <artifactId>eclipse-jarsigner-plugin</artifactId>
-            <version>${cbi-plugins.version}</version>
-            <executions>
-              <execution>
-                <id>sign</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
+        <id>release</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.eclipse.cbi.maven.plugins</groupId>
+              <artifactId>eclipse-jarsigner-plugin</artifactId>
+              <version>${cbi-plugins.version}</version>
+              <executions>
+                <execution>
+                  <id>sign</id>
+                  <goals>
+                    <goal>sign</goal>
+                  </goals>
+                  <phase>verify</phase>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+        <distributionManagement>
+          <repository>
+            <id>repo.eclipse.org</id>
+            <name>Eclipse CBI Nexus Repository - Releases</name>
+            <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
+          </repository>
+          <snapshotRepository>
+            <id>repo.eclipse.org</id>
+            <name>Ecilpse CBI Nexus Repository - Snapshots</name>
+            <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
+          </snapshotRepository>
+        </distributionManagement>
+    </profile> 
+    <profile>
+      <id>ossrh</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+      </distributionManagement>
     </profile>
   </profiles>
 
@@ -208,4 +220,3 @@
     </dependencies>
   </dependencyManagement>
 </project>
-
