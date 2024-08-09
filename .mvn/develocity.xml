@@ -1,0 +1,11 @@
+<develocity>
+  <server>
+    <url>https://develocity-staging.eclipse.org</url>
+  </server>
+  <buildScan>
+    <obfuscation>
+      <username>eclipse-cbi-bot</username>
+      <ipAddresses>0.0.0.0</ipAddresses>
+    </obfuscation>
+  </buildScan>
+</develocity>

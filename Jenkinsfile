@@ -1,3 +1,10 @@
+def secrets = [
+  [path: 'cbi/technology.cbi/develocity.eclipse.org', secretValues: [
+    [envVar: 'DEVELOCITY_ACCESS_KEY', vaultKey: 'api-token']
+    ]
+  ]
+]
+
 pipeline {
     agent any
     options {
@@ -15,7 +22,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean verify -Prelease -B'
+                withVault([vaultSecrets: secrets]) {
+                    sh 'mvn clean verify -Prelease -B'
+                }
             }
         }
         stage('Deploy') {
