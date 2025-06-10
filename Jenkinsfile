@@ -33,5 +33,10 @@ pipeline {
                 }
             }
         }
+        stage('Maven Central') {
+            steps {
+                sh 'mvn -P release --batch-mode deploy -DskipTests'                
+            }
+        }
     }
 }
