@@ -10,7 +10,8 @@
   Contributors:
     Thanh Ha (Eclipse Foundation) - initial implementation
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.cbi.tycho.example</groupId>
@@ -122,18 +123,6 @@
     <module>org.eclipse.cbi.tycho.example.updatesite</module>
   </modules>
 
-  <distributionManagement>
-    <repository>
-      <id>repo.eclipse.org</id>
-      <name>Eclipse CBI Nexus Repository - Releases</name>
-      <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>repo.eclipse.org</id>
-      <name>Ecilpse CBI Nexus Repository - Snapshots</name>
-      <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
 
   <build>
     <plugins>
@@ -172,7 +161,8 @@
           <publishingServerId>central</publishingServerId>
           <autoPublish>true</autoPublish>
           <waitUntil>published</waitUntil>
-          <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl>
+          <!--
+          <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl> -->
         </configuration>
       </plugin>
     </plugins>
@@ -195,6 +185,18 @@
   <profiles>
     <profile>
       <id>release</id>
+      <distributionManagement>
+        <repository>
+          <id>repo.eclipse.org</id>
+          <name>Eclipse CBI Nexus Repository - Releases</name>
+          <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
+        </repository>
+        <snapshotRepository>
+          <id>repo.eclipse.org</id>
+          <name>Ecilpse CBI Nexus Repository - Snapshots</name>
+          <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
+        </snapshotRepository>
+      </distributionManagement>
       <build>
         <plugins>
           <plugin>
@@ -215,13 +217,13 @@
       </build>
     </profile>
     <profile>
-      <id>Central</id>
+      <id>central</id>
       <build>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>3.2.7</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -245,9 +247,9 @@
         <version>${maven.version}</version>
       </dependency>
       <dependency>
-         <groupId>org.apache.maven</groupId>
-         <artifactId>maven-plugin-api</artifactId>
-         <version>${maven.version}</version>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-plugin-api</artifactId>
+        <version>${maven.version}</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
