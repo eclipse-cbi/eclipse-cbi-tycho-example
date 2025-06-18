@@ -15,11 +15,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.cbi.tycho.example</groupId>
-  <artifactId>cbi.tycho.example-parent</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>org.eclipse.cbi.tycho.example-parent</artifactId>
+  <version>1.0.4</version>
   <packaging>pom</packaging>
   <name>Eclipse CBI Tycho Example Project</name>
-  <url>https://wiki.eclipse.org/CBI</url>
+  <url>https://eclipse.dev/cbi</url>
   <description>CBI example project to create Eclipse plugins, features, and update site.</description>
 
   <licenses>
@@ -84,6 +84,7 @@
     <maven.version>3.9.6</maven.version>
     <tycho.version>4.0.6</tycho.version>
     <cbi-plugins.version>1.3.2</cbi-plugins.version>
+    <sonatype-snapshot-repo.url>https://central.sonatype.com/repository/maven-snapshots</sonatype-snapshot-repo.url>
     <eclipse-maven-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-maven-repo.url>
     <eclipse-license-repo>https://download.eclipse.org/cbi/updates/license</eclipse-license-repo>
     <eclipse-platform-repo.url>https://download.eclipse.org/eclipse/updates/4.33</eclipse-platform-repo.url>
@@ -100,6 +101,16 @@
       </releases>
       <snapshots>
         <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+      <id>sonatype-maven</id>
+      <url>${sonatype-snapshot-repo.url}</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
       </snapshots>
     </pluginRepository>
   </pluginRepositories>
@@ -127,6 +138,24 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.eclipse.cbi.central</groupId>
+        <artifactId>central-staging-plugins</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho.version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho.version}</version>
@@ -152,19 +181,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.sonatype.central</groupId>
-        <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.8.0</version>
-        <extensions>true</extensions>
-        <configuration>
-          <publishingServerId>central</publishingServerId>
-          <autoPublish>true</autoPublish>
-          <waitUntil>published</waitUntil>
-          <!--
-          <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl> -->
-        </configuration>
-      </plugin>
     </plugins>
 
     <pluginManagement>
@@ -184,32 +200,33 @@
 
   <profiles>
     <profile>
-      <id>release</id>
-      <distributionManagement>
-        <repository>
-          <id>repo.eclipse.org</id>
-          <name>Eclipse CBI Nexus Repository - Releases</name>
-          <url>https://repo.eclipse.org/content/repositories/cbi-releases/</url>
-        </repository>
-        <snapshotRepository>
-          <id>repo.eclipse.org</id>
-          <name>Ecilpse CBI Nexus Repository - Snapshots</name>
-          <url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</url>
-        </snapshotRepository>
-      </distributionManagement>
+      <id>central</id>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.eclipse.cbi.maven.plugins</groupId>
-            <artifactId>eclipse-jarsigner-plugin</artifactId>
-            <version>${cbi-plugins.version}</version>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.8.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
+              <waitUntil>published</waitUntil>
+              <!--
+              <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl> -->
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.8</version>
             <executions>
               <execution>
-                <id>sign</id>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
                 </goals>
-                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -217,13 +234,24 @@
       </build>
     </profile>
     <profile>
-      <id>central</id>
+      <id>central-staging</id>
       <build>
         <plugins>
           <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.8.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
+              <waitUntil>validated</waitUntil>
+            </configuration>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.2.7</version>
+            <version>3.2.8</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
