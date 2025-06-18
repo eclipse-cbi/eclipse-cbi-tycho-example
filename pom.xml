@@ -15,8 +15,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eclipse.cbi.tycho.example</groupId>
-  <artifactId>cbi.tycho.example-parent</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>org.eclipse.cbi.tycho.example-parent</artifactId>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>Eclipse CBI Tycho Example Project</name>
   <url>https://wiki.eclipse.org/CBI</url>
@@ -159,8 +159,8 @@
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
-          <autoPublish>true</autoPublish>
-          <waitUntil>published</waitUntil>
+          <autoPublish>false</autoPublish>
+          <!-- <waitUntil>published</waitUntil> -->
           <!--
           <centralSnapshotsUrl>https://central.sonatype.com/repository/maven-snapshots/</centralSnapshotsUrl> -->
         </configuration>
