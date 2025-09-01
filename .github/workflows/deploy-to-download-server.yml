@@ -1,0 +1,35 @@
+name: Java CI with Maven
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+    - name: Set up JDK 17
+      uses: actions/setup-java@0ab4596768b603586c0de567f2430c30f5b0d2b0 # v3.13.0
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Setup Maven
+      uses: stCarolas/setup-maven@v5
+      with:
+        maven-version: 3.9.11
+    - name: Build with Maven
+      run: mvn -B clean verify
+
+    - name: SCP artifact to download.eclipse.org
+      uses: appleboy/scp-action@ff85246acaad7bdce478db94a363cd2bf7c90345 # v1.0.0
+      with:
+        host: ${{ secrets.SCP_HOST }}
+        username: ${{ secrets.SCP_USERNAME }}
+        key: ${{ secrets.SCP_KEY }}
+        passphrase: ${{ secrets.SCP_PASSPHRASE }}
+        source: "org.eclipse.cbi.tycho.example.updatesite/target/org.eclipse.cbi.tycho.example.updatesite-*.zip"
+        target: "/home/data/httpd/download.eclipse.org/cbi/github-upload-test/"
+      
+
+ 
