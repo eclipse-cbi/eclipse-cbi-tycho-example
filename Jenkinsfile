@@ -38,5 +38,33 @@ pipeline {
                 sh 'mvn -P release --batch-mode deploy -DskipTests'                
             }
         }
+        stage('Sonar') {
+            options {
+                timeout(time: 30, unit: 'MINUTES') 
+            }
+            steps {
+                withSonarQubeEnv(installationName: 'SonarCloud.io', credentialsId: 'sonarcloud-token-eclipse-cbi-tycho-example') {
+                    sh '''
+                        mvn sonar:sonar \
+                            -Dmaven.test.failure.ignore=true \
+                            -Dsonar.organization=eclipse-cbi \
+                            -Dsonar.pullrequest.branch=${CHANGE_BRANCH} \
+                            -Dsonar.pullrequest.base=${CHANGE_TARGET} \
+                            -Dsonar.pullrequest.key=${CHANGE_ID}\
+                            -Dsonar.java.binaries='target/' \
+                            -Dsonar.projectKey=eclipse-cbi_eclipse-cbi-tycho-example
+                    '''
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            options {
+                timeout(time: 30, unit: 'MINUTES') 
+            }
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
     }
 }
