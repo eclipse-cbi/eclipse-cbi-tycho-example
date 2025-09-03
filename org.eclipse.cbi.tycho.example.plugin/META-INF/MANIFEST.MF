@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CBI Tycho Example
 Bundle-SymbolicName: org.eclipse.cbi.tycho.example.plugin;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.4
 Bundle-Activator: org.eclipse.cbi.tycho.example.plugin.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime

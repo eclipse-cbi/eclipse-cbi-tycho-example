@@ -9,15 +9,69 @@
   Contributors:
     Thanh Ha (Eclipse Foundation) - initial implementation
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>cbi.tycho.example-parent</artifactId>
+    <artifactId>org.eclipse.cbi.tycho.example-parent</artifactId>
     <groupId>org.eclipse.cbi.tycho.example</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.4</version>
   </parent>
   <groupId>org.eclipse.cbi.tycho.example</groupId>
   <artifactId>org.eclipse.cbi.tycho.example.plugin</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.4</version>
   <packaging>eclipse-plugin</packaging>
+  <name>Eclipse CBI Tycho Example Plugin</name>
+  <description>CBI example project to create Eclipse plugins</description>
+  <url>https://eclipse.dev/cbi</url>
+
+  <licenses>
+    <license>
+      <name>Eclipse Public License, Version 2.0</name>
+      <url>http://www.eclipse.org/legal/epl-v20.html</url>
+      <distribution>repo</distribution>
+    </license>
+    <license>
+      <name>Eclipse Distribution License, Version 1.0</name>
+      <url>http://eclipse.org/org/documents/edl-v10.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>tha</id>
+      <name>Thanh Ha</name>
+      <email>thanh.ha@eclipse.org</email>
+      <organization>Eclipse Foundation</organization>
+      <organizationUrl>https://www.eclipse.org/</organizationUrl>
+      <roles>
+        <role>Release Engineer</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>America/Montreal</timezone>
+      <properties>
+        <picUrl>https://www.eclipse.org/org/foundation/hat%20photos/thanh.jpg</picUrl>
+      </properties>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://git@github.com:eclipse-cbi/eclipse-cbi-tycho-example.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:eclipse-cbi/eclipse-cbi-tycho-example.git</developerConnection>
+    <tag>main</tag>
+    <url>https://github.com/eclipse-cbi/eclipse-cbi-tycho-example</url>
+  </scm>
+
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.11.2</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>
