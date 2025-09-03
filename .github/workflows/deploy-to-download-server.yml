@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Publish to downloads.eclipse.org
 
 on:
   workflow_dispatch:
@@ -30,6 +30,7 @@ jobs:
         passphrase: ${{ secrets.SCP_PASSPHRASE }}
         source: "org.eclipse.cbi.tycho.example.updatesite/target/org.eclipse.cbi.tycho.example.updatesite-*.zip"
         target: "/home/data/httpd/download.eclipse.org/cbi/github-upload-test/"
+        strip_components: true
       
 
  
