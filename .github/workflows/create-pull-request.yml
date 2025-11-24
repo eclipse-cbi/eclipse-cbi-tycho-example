@@ -6,6 +6,8 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4.2.2
         with:
