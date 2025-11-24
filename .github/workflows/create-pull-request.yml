@@ -45,4 +45,6 @@ jobs:
             --base main \
             --head $(git rev-parse --abbrev-ref HEAD)
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
