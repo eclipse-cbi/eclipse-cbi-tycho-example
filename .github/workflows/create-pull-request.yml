@@ -1,0 +1,48 @@
+name: "Create Pull Request via GitHub CLI"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: eclipse-cbi/eclipse-cbi-publish-test
+
+      - name: Configure Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        shell: bash
+
+      - name: Update file
+        run: echo "Updated at $(date -u --rfc-3339=ns)" > gh-update.txt
+        shell: bash
+
+      - name: Commit and push
+        id: push
+        run: |
+          branch="gh/update-$(date +%s)"
+          if [ "${{ inputs.update_only }}" = "false" ]; then
+            git checkout -b "$branch"
+            git add gh-update.txt
+            git commit -m "chore: update file"
+            echo "Pushing branch: $branch"
+            git push origin "$branch"
+          else
+            echo "Skipping push as update_only is true"
+          fi
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Open pull request using gh CLI
+        run: |
+          gh pr create \
+            --title "chore: update via gh cli" \
+            --body "This PR was created using the GitHub CLI." \
+            --base main \
+            --head $(git rev-parse --abbrev-ref HEAD)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
