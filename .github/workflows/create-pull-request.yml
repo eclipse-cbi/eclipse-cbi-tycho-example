@@ -48,6 +48,6 @@ jobs:
             --base main \
             --head $(git rev-parse --abbrev-ref HEAD)
         env:
-          GH_TOKEN: ${{ github.token }}
-        #env:
+          GH_TOKEN: ${{ secrets.HD6226_TOKEN }}
+          #GH_TOKEN: ${{ github.token }}
           #GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
