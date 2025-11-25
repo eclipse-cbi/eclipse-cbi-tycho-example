@@ -28,15 +28,11 @@ jobs:
         id: push
         run: |
           branch="gh/update-$(date +%s)"
-          if [ "${{ inputs.update_only }}" = "false" ]; then
-            git checkout -b "$branch"
-            git add gh-update.txt
-            git commit -m "chore: update file"
-            echo "Pushing branch: $branch"
-            git push origin "$branch"
-          else
-            echo "Skipping push as update_only is true"
-          fi
+          git checkout -b "$branch"
+          git add gh-update.txt
+          git commit -m "chore: update file"
+          echo "Pushing branch: $branch"
+          git push origin "$branch"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
         shell: bash
 
