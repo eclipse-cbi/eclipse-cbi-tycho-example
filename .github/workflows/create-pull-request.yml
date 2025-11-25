@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
         with:
           repository: eclipse-cbi/eclipse-cbi-publish-test
-          token: ${{ secrets.HD6226_TOKEN }}
+          token: ${{ secrets.HD6226_TOKEN }} # classic PAT for cbi-bot with scope repo
 
       - name: Configure Git user
         run: |
@@ -42,5 +42,5 @@ jobs:
             --base main \
             --head $(git rev-parse --abbrev-ref HEAD)
         env:
-          GH_TOKEN: ${{ secrets.HD6226_TOKEN }}
+          GH_TOKEN: ${{ secrets.HD6226_TOKEN }}  # classic PAT for cbi-bot with scope repo
 
