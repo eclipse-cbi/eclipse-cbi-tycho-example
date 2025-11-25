@@ -14,6 +14,20 @@ on:
     types: [created]
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log GitHub Event Name
+        if: github.event_name == 'issue_comment'
+        run: >
+            echo "This workflow was triggered by an issue comment. Event: ${{ github.event_name }}"
+
+      - name: Log Something Else
+        if: github.event_name != 'issue_comment'
+        run: >
+            echo "This workflow was not triggered by an issue comment. Event: ${{ github.event_name }}"
+
+
   # Documentation: https://github.com/eclipse-dash/dash-licenses#reusable-github-workflow-for-automatic-license-check-and-ip-team-review-requests
   eclipse-dash-license-tool-run:
     name: Eclipse Dash License Tool
