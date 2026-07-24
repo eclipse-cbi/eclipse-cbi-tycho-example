@@ -5,7 +5,7 @@ pipeline {
         timeout(time: 10, unit: 'MINUTES')
     }
     tools {
-        maven 'apache-maven-3.9.6'
+        maven 'apache-maven-latest'
         jdk 'openjdk-jdk17-latest'
     }
     environment {
